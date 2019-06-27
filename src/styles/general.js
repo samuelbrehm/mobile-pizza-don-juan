@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 export const Input = styled.TextInput`
-  background: rgba(255, 255, 255);
+  background: #fff;
   border-width: 1px;
   border-color: rgba(255, 255, 255, 0.9);
   border-radius: 5px;
@@ -9,7 +9,7 @@ export const Input = styled.TextInput`
   padding-left: 10px;
   padding-right: 10px;
   margin-bottom: 20px;
-  color: #fff;
+  color: #000000;
 `;
 
 export const Button = styled.TouchableOpacity`
@@ -21,6 +21,7 @@ export const Button = styled.TouchableOpacity`
 `;
 
 export const ButtonText = styled.Text`
+  font-family: Helvetica-Bold;
   font-size: 15px;
   font-weight: bold;
   color: #fff;
