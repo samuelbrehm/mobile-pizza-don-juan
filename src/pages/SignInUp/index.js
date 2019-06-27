@@ -5,6 +5,7 @@ import { Platform } from 'react-native';
 
 import {
   Background,
+  ContentBackground,
   Container,
   Content,
   ContentLogo,
@@ -51,71 +52,73 @@ export default class SignInUp extends Component {
 
     return (
       <Background source={fundo}>
-        <Container behavior={Platform.OS === 'ios' ? 'padding' : null}>
-          <Content>
-            <ContentLogo>
-              <Logo source={logo} />
-            </ContentLogo>
+        <ContentBackground>
+          <Container behavior={Platform.OS === 'ios' ? 'padding' : null}>
+            <Content>
+              <ContentLogo>
+                <Logo source={logo} />
+              </ContentLogo>
 
-            {newAccount ? (
-              <InputName
-                placeholder="Nome completo"
-                value={username}
-                onChangeText={text => this.setState({ username: text })}
-                keyboardType="default"
-                autoCapitalize="words"
+              {newAccount ? (
+                <InputName
+                  placeholder="Nome completo"
+                  value={username}
+                  onChangeText={text => this.setState({ username: text })}
+                  keyboardType="default"
+                  autoCapitalize="words"
+                  autoCorrect={false}
+                  underlineColorAndroid="transparent"
+                  autoFocus
+                  returnKeyType="next"
+                  onSubmitEditing={() => this.emailInput.focus()}
+                />
+              ) : null}
+
+              <InputEmail
+                placeholder="Seu e-mail"
+                value={email}
+                onChangeText={text => this.setState({ email: text })}
+                keyboardType="email-address"
+                autoCapitalize="none"
                 autoCorrect={false}
                 underlineColorAndroid="transparent"
                 autoFocus
                 returnKeyType="next"
-                onSubmitEditing={() => this.emailInput.focus()}
+                ref={(el) => {
+                  this.emailInput = el;
+                }}
+                onSubmitEditing={() => this.passwordInput.focus()}
               />
-            ) : null}
 
-            <InputEmail
-              placeholder="Seu e-mail"
-              value={email}
-              onChangeText={text => this.setState({ email: text })}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              underlineColorAndroid="transparent"
-              autoFocus
-              returnKeyType="next"
-              ref={(el) => {
-                this.emailInput = el;
-              }}
-              onSubmitEditing={() => this.passwordInput.focus()}
-            />
+              <InputPassword
+                placeholder="Senha secreta"
+                value={password}
+                onChangeText={text => this.setState({ password: text })}
+                secureTextEntry
+                autoCapitalize="none"
+                autoCorrect={false}
+                underlineColorAndroid="transparent"
+                autoFocus
+                returnKeyType="send"
+                ref={(el) => {
+                  this.passwordInput = el;
+                }}
+                onSubmitEditing={this.handleSubmit}
+              />
+              <SignInButton onPress={this.handleSubmit}>
+                <SignInButtonText>{newAccount ? 'Criar conta' : 'Entrar'}</SignInButtonText>
+              </SignInButton>
 
-            <InputPassword
-              placeholder="Senha secreta"
-              value={password}
-              onChangeText={text => this.setState({ password: text })}
-              secureTextEntry
-              autoCapitalize="none"
-              autoCorrect={false}
-              underlineColorAndroid="transparent"
-              autoFocus
-              returnKeyType="send"
-              ref={(el) => {
-                this.passwordInput = el;
-              }}
-              onSubmitEditing={this.handleSubmit}
-            />
-            <SignInButton onPress={this.handleSubmit}>
-              <SignInButtonText>{newAccount ? 'Criar conta' : 'Entrar'}</SignInButtonText>
-            </SignInButton>
-
-            <ContentButton>
-              <LoginButton onPress={this.handleAccount}>
-                <LoginButtonText>
-                  {newAccount ? 'Já tenho login' : 'Criar conta gratuíta'}
-                </LoginButtonText>
-              </LoginButton>
-            </ContentButton>
-          </Content>
-        </Container>
+              <ContentButton>
+                <LoginButton onPress={this.handleAccount}>
+                  <LoginButtonText>
+                    {newAccount ? 'Já tenho login' : 'Criar conta gratuíta'}
+                  </LoginButtonText>
+                </LoginButton>
+              </ContentButton>
+            </Content>
+          </Container>
+        </ContentBackground>
       </Background>
     );
   }
