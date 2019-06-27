@@ -8,6 +8,11 @@ export const Background = styled.ImageBackground.attrs({
   flex: 1;
 `;
 
+export const ContentBackground = styled.View`
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.6);
+`;
+
 export const Container = styled.KeyboardAvoidingView`
   flex: 1;
   justify-content: center;
