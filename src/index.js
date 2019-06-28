@@ -1,18 +1,17 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 
 import '~/config/ReactotronConfig';
-
-import { Provider } from 'react-redux';
-import store from './store';
-
 import '~/config/StatusBarConfig';
 
-import Routes from '~/routes';
+import store from './store';
 
-const App = () => (
+import App from './App';
+
+const Root = () => (
   <Provider store={store}>
-    <Routes />
+    <App />
   </Provider>
 );
 
-export default App;
+export default Root;
