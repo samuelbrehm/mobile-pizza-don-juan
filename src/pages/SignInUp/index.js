@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 
 import { Platform } from 'react-native';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import AuthActions from '~/store/ducks/auth';
+
 import {
   Background,
   ContentBackground,
@@ -23,21 +27,31 @@ import {
 import logo from '~/assets/images/logo.png';
 import fundo from '~/assets/images/fundo-mobile.jpeg';
 
-export default class SignInUp extends Component {
-  static propTypes = {};
+class SignInUp extends Component {
+  static propTypes = {
+    signInRequest: PropTypes.func.isRequired,
+    signUpRequest: PropTypes.func.isRequired,
+  };
 
   state = {
     newAccount: false,
     username: '',
     email: '',
     password: '',
+    typeUser: 'client',
   };
 
   handleSubmit = () => {
-    const { email, password } = this.state;
-    // const { signInRequest } = this.props;
+    const {
+      newAccount, username, email, password, typeUser,
+    } = this.state;
+    const { signInRequest, signUpRequest } = this.props;
 
-    // signInRequest(email, password);
+    if (newAccount) {
+      signUpRequest(username, email, password, typeUser);
+    } else {
+      signInRequest(email, password);
+    }
   };
 
   handleAccount = () => {
@@ -111,9 +125,7 @@ export default class SignInUp extends Component {
 
               <ContentButton>
                 <LoginButton onPress={this.handleAccount}>
-                  <LoginButtonText>
-                    {newAccount ? 'Já tenho login' : 'Criar conta gratuíta'}
-                  </LoginButtonText>
+                  <LoginButtonText>{newAccount ? 'Já tenho login' : 'Criar conta gratuíta'}</LoginButtonText>
                 </LoginButton>
               </ContentButton>
             </Content>
@@ -123,3 +135,10 @@ export default class SignInUp extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => bindActionCreators(AuthActions, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(SignInUp);
